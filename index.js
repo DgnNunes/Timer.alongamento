@@ -28,7 +28,6 @@ function startTimer() {
         clearInterval(timer);
         timerDisplay.textContent = "Time's up!";
         isRunning = false;
-        // Chamada da API a cada 25 minutos (1500 segundos)
         if (timeLeft % 1500 === 0) {
           fetchAPI();
         }
@@ -49,41 +48,18 @@ function resetTimer() {
   document.getElementById('timer').textContent = '25:00';
 }
 
-
-function displayExercise(exercise) {
-    const exerciseContainer = document.getElementById('exercise');
-    exerciseContainer.innerHTML = ''; // Limpa o conteúdo anterior
-  
-    console.log('Dados do exercício:', exercise); // Adicionando console.log para verificar os dados
-  
-    if (exercise && exercise.name && exercise.description) {
-      const exerciseName = document.createElement('h2');
-      exerciseName.textContent = `Nome: ${exercise.name}`;
-  
-      const exerciseDescription = document.createElement('p');
-      exerciseDescription.textContent = `Descrição: ${exercise.description}`;
-  
-      exerciseContainer.appendChild(exerciseName);
-      exerciseContainer.appendChild(exerciseDescription);
-    } else {
-   
-      const errorMessage = document.createElement('p');
-      errorMessage.textContent = 'Os dados do exercício estão incompletos ou inválidos.';
-      exerciseContainer.appendChild(errorMessage);
-    }
-  }
   function fetchAPI() {
-    // Verificar se o timer está ativo
+    
     if (isRunning) {
       console.log('O timer está ativo. Aguarde até que o timer seja concluído para exibir o exercício de alongamento.');
       return;
     }
   
     let type = 'stretching';
-  
+    
     fetch('https://api.api-ninjas.com/v1/exercises?type=' + type, {
       method: 'GET',
-      headers: { 'X-Api-Key': 'r39tgCKGIcWEgPClOnD1JeiydHJa5Kug2hP41Khp'}
+      headers: { 'X-Api-Key': 'r39tgCKGIcWEgPClOnD1JeiydHJa5Kug2hP41Khp'},
     })
     .then((res) => {
       if (!res.ok) {
@@ -95,11 +71,11 @@ function displayExercise(exercise) {
       if (data && data.length > 0) {
         const exercise = data[Math.floor(Math.random() * data.length)];
         displayExercise(exercise);
-        document.getElementById('completeExerciseBtn').style.display = 'block'; // Exibir o botão de conclusão do exercício
+        document.getElementById('completeExerciseBtn').style.display = 'block'; 
       } else {
         console.log('Nenhum exercício retornado pela API.');
         const exerciseContainer = document.getElementById('exercise');
-        exerciseContainer.innerHTML = ''; // Limpa o conteúdo anterior
+        exerciseContainer.innerHTML = ''; 
         const errorMessage = document.createElement('p');
         errorMessage.textContent = 'Não há nenhum alongamento disponível no momento. Tente novamente mais tarde.';
         exerciseContainer.appendChild(errorMessage);
@@ -108,18 +84,42 @@ function displayExercise(exercise) {
     .catch((error) => {
       console.error('Erro ao buscar os dados da API:', error);
       const exerciseContainer = document.getElementById('exercise');
-      exerciseContainer.innerHTML = ''; // Limpa o conteúdo anterior
+      exerciseContainer.innerHTML = ''; 
       const errorMessage = document.createElement('p');
       errorMessage.textContent = 'Não foi possível carregar o alongamento. Tente novamente mais tarde.';
       exerciseContainer.appendChild(errorMessage);
     });
   }
 
+  function displayExercise(exercise) {
+    const exerciseContainer = document.getElementById('exercise');
+    exerciseContainer.innerHTML = ''; 
+  
+    console.log('Dados do exercício:', exercise); 
+  
+    if (exercise && exercise.name && exercise.description) {
+      const exerciseName = document.createElement('h2');
+      exerciseName.textContent = 'Nome: ${exercise.name}';
+  
+      const exerciseDescription = document.createElement('p');
+      exerciseDescription.textContent = 'Descrição: ${exercise.description}';
+  
+      exerciseContainer.appendChild(exerciseName);
+      exerciseContainer.appendChild(exerciseDescription);
+    } else {
+   
+      const errorMessage = document.createElement('p');
+      errorMessage.textContent = 'Os dados do exercício estão incompletos ou inválidos.';
+      exerciseContainer.appendChild(errorMessage);
+    }
+  }
   
 function completeExercise() {
-  document.getElementById('exercise').innerHTML = ''; // Limpa o exercício da tela
-  document.getElementById('completeExerciseBtn').style.display = 'none'; // Oculta o botão de conclusão do exercício
+  document.getElementById('exercise').innerHTML = ''; 
+  document.getElementById('completeExerciseBtn').style.display = 'none'; 
 } 
+
+
 
 
   
