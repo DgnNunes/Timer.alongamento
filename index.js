@@ -51,7 +51,7 @@ function resetTimer() {
   function fetchAPI() {
     
     if (isRunning) {
-      console.log('O timer está ativo. Aguarde até que o timer seja concluído para exibir o exercício de alongamento.');
+      console.log('The timer is active. Wait until the timer completes to display the stretching exercise.');
       return;
     }
   
@@ -63,7 +63,7 @@ function resetTimer() {
     })
     .then((res) => {
       if (!res.ok) {
-        throw new Error('Erro ao buscar os dados da API');
+        throw new Error('Error fetching data from API');
       }
       return res.json();
     })
@@ -73,43 +73,42 @@ function resetTimer() {
         displayExercise(exercise);
         document.getElementById('completeExerciseBtn').style.display = 'block'; 
       } else {
-        console.log('Nenhum exercício retornado pela API.');
+        console.log('No exercises returned by the API.');
         const exerciseContainer = document.getElementById('exercise');
         exerciseContainer.innerHTML = ''; 
         const errorMessage = document.createElement('p');
-        errorMessage.textContent = 'Não há nenhum alongamento disponível no momento. Tente novamente mais tarde.';
+        errorMessage.textContent = 'There are no stretches available at this time. Try again later.';
         exerciseContainer.appendChild(errorMessage);
       }
     })
     .catch((error) => {
-      console.error('Erro ao buscar os dados da API:', error);
+      console.error('Error fetching data from API:', error);
       const exerciseContainer = document.getElementById('exercise');
       exerciseContainer.innerHTML = ''; 
       const errorMessage = document.createElement('p');
-      errorMessage.textContent = 'Não foi possível carregar o alongamento. Tente novamente mais tarde.';
+      errorMessage.textContent = 'Unable to load stretch. Try again later.';
       exerciseContainer.appendChild(errorMessage);
     });
   }
-  debugger
 
   function displayExercise(exercise) {
     const exerciseContainer = document.getElementById('exercise');
     exerciseContainer.innerHTML = ''; 
   
-    console.log('Dados do exercício:', exercise); 
+    console.log('Exercise data:', exercise); 
   
     if (exercise && exercise.name && exercise.instructions) {
       const exerciseName = document.createElement('h2');
-      exerciseName.textContent = `Nome: ${exercise.name}`; // Correção aqui
+      exerciseName.textContent = `Name: ${exercise.name}`; 
   
       const exerciseDescription = document.createElement('p');
-      exerciseDescription.textContent = `Descrição: ${exercise.instructions}`; // Correção aqui
+      exerciseDescription.textContent = `Description: ${exercise.instructions}`; 
   
       exerciseContainer.appendChild(exerciseName);
       exerciseContainer.appendChild(exerciseDescription);
     } else {
       const errorMessage = document.createElement('p');
-      errorMessage.textContent = 'Os dados do exercício estão incompletos ou inválidos.';
+      errorMessage.textContent = 'Exercise data is incomplete or invalid.';
       exerciseContainer.appendChild(errorMessage);
     }
   }
