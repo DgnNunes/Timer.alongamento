@@ -90,6 +90,7 @@ function resetTimer() {
       exerciseContainer.appendChild(errorMessage);
     });
   }
+  debugger
 
   function displayExercise(exercise) {
     const exerciseContainer = document.getElementById('exercise');
@@ -97,17 +98,16 @@ function resetTimer() {
   
     console.log('Dados do exercício:', exercise); 
   
-    if (exercise && exercise.name && exercise.description) {
+    if (exercise && exercise.name && exercise.instructions) {
       const exerciseName = document.createElement('h2');
-      exerciseName.textContent = 'Nome: ${exercise.name}';
+      exerciseName.textContent = `Nome: ${exercise.name}`; // Correção aqui
   
       const exerciseDescription = document.createElement('p');
-      exerciseDescription.textContent = 'Descrição: ${exercise.description}';
+      exerciseDescription.textContent = `Descrição: ${exercise.instructions}`; // Correção aqui
   
       exerciseContainer.appendChild(exerciseName);
       exerciseContainer.appendChild(exerciseDescription);
     } else {
-   
       const errorMessage = document.createElement('p');
       errorMessage.textContent = 'Os dados do exercício estão incompletos ou inválidos.';
       exerciseContainer.appendChild(errorMessage);
@@ -119,7 +119,3 @@ function completeExercise() {
   document.getElementById('completeExerciseBtn').style.display = 'none'; 
 } 
 
-
-
-
-  
